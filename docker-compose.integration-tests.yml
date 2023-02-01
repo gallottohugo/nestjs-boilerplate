@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  tests:
+    build:
+      context: .
+      target: integration-tests
+    depends_on:
+      - database
+      - redis
+    env_file:
+      - .env.test
+  database:
+    image: postgres:14.2
+    restart: always
+    environment:
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=socrates
+  redis:
+    image: redis:7.0.4-alpine
+    restart: always
+    ports:
+      - 6379:6379

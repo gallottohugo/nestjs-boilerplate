@@ -1,0 +1,20 @@
+name: Unit and integration tests
+
+on:
+  workflow_call:
+
+jobs:
+  unit_tests:
+    runs-on: nestjs-boilerplate-self-hosted-runner
+    steps:
+      - name: Clone project
+        uses: actions/checkout@v3
+
+      - name: Install Docker Compose
+        uses: KengoTODA/actions-setup-docker-compose@main
+        with:
+          version: '2.6.1'
+
+      - name: Run docker-compose tests
+        run: |
+          docker-compose -f ./docker-compose.integration-tests.yml up --abort-on-container-exit

@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      target: production
+    ports:
+      - 3333:3333
+    links:
+      - redis
+      - database
+    depends_on:
+      - redis
+      - database
+    env_file:
+      - .env.docker
+  worker:
+    build:
+      context: .
+      target: production
+    command: [ "dumb-init", "node", "worker.js" ]
+    links:
+      - redis
+    depends_on:
+      - redis
+    env_file:
+      - .env.docker
+  redis:
+    image: redis:7.0.4-alpine
+    restart: always
+  database:
+    image: postgres:14.2
+    restart: always
+    environment:
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=socrates

@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7.0.4-alpine
+    restart: always
+    ports:
+      - 6380:6379
+  test-db:
+    image: postgres:14.2
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=socrates
+    ports:
+      - 5435:5432

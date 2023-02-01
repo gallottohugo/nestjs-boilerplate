@@ -1,0 +1,13 @@
+name: CI Tests
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'chore/**'
+      - 'fix/**'
+      - 'dependabot/**'
+
+jobs:
+  test_staging:
+    uses: ./.github/workflows/reusable-unit-and-integration-test.yaml

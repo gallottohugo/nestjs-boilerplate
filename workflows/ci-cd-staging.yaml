@@ -1,0 +1,10 @@
+name: CI-CD Staging
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  test:
+    uses: ./.github/workflows/reusable-unit-and-integration-test.yaml
